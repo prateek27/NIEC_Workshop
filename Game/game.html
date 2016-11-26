@@ -1,0 +1,166 @@
+<html>
+    <head>
+    
+        <title>My First Game</title>
+        <style>
+            #mycanvas{
+                border:5px solid orange;
+                background:url("Assets/background.jpg");
+                background-size:cover;
+            }
+        
+        </style>
+    </head>
+    
+    <body>
+        <canvas id="mycanvas" width="500px" height="400px"> 
+        </canvas>
+    
+        <script>
+            var canvas = document.getElementById('mycanvas');
+            console.log(canvas);
+            var pen = canvas.getContext('2d');
+            
+            
+            function init(){
+                GAME_WIDTH = 500;
+                GAME_HEIGHT = 400;
+                GAME_RUNNING = true;
+                //Initialise the objects
+                enemy =[{
+                  x:150,
+                  y:100,
+                  w:50,
+                  h:50,
+                  speedY:5,
+                },
+                 
+                {
+                  x:250,
+                  y:80,
+                  w:50,
+                  h:50,
+                  speedY:-5,
+                },
+                        {
+                  x:350,
+                  y:00,
+                  w:50,
+                  h:50,
+                  speedY:8,
+                }         
+               ];
+               player ={
+                  x:0,
+                  y:220,
+                  w:50,
+                  h:50,
+                  speedX:0,
+                };
+                goal ={
+                  x:450,
+                  y:220,
+                  w:50,
+                  h:50,
+
+                };
+                playerImg = new Image;
+                playerImg.src = "Assets/pika.png";
+                
+                
+               enemyImg = new Image;
+                enemyImg.src = "Assets/gengar.png";
+                
+                 goalImg = new Image;
+                goalImg.src = "Assets/ball.png";
+                
+                canvas.addEventListener('mousedown',function(){ 
+                     player.speedX = 5;   
+                });
+                
+                canvas.addEventListener('mouseup',function(){ 
+                     player.speedX = 0;   
+                });
+                // Handle Keyboard input
+                document.addEventListener('keydown',function(e){
+                    console.log(e);
+                    if(e.key=="ArrowLeft"){
+                        player.x -= 10;
+                    }
+                    else if(e.key=="ArrowRight"){
+                        player.x += 10;
+                    }
+                    else if(e.key=="ArrowUp"){
+                        player.y -= 20;
+                    }
+                    else if(e.key=="ArrowDown"){
+                        player.y += 20;
+                    }
+                    
+                });
+            }
+            function isColliding(r1,r2){
+                var x_axis = Math.abs(r1.x - r2.x )<= r1.w;
+                var y_axis = Math.abs(r1.y - r2.y) <= r1.h;
+                
+                return x_axis && y_axis;
+                
+            }
+            function draw(){
+                pen.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+                
+                for(var i=0;i<3;i++){
+                 pen.drawImage(enemyImg,enemy[i].x,enemy[i].y,enemy[i].w,enemy[i].h);
+                }
+                pen.drawImage(playerImg,player.x,player.y,player.w,player.h);
+                pen.drawImage(goalImg,goal.x,goal.y,goal.w,goal.h);
+                
+            }
+            function update(){
+                
+                for(var i=0;i<3;i++){
+                enemy[i].y += enemy[i].speedY;
+                if(enemy[i].y>=GAME_HEIGHT-enemy[i].h || enemy[i].y <=0){
+                    enemy[i].speedY *= -1;
+                }
+                }
+                player.x += player.speedX;
+                
+                for(var i=0;i<3;i++){
+                if(isColliding(player,enemy[i])){
+                    alert("GAME OVER");
+                    GAME_RUNNING = false;
+                }
+                }
+                if(isColliding(player,goal)){
+                    alert("GAME WON");
+                    GAME_RUNNING = false;
+                }
+            }
+            //GAME LOOP
+            function render(){
+                console.log("in render");
+                draw();
+                update();
+                if(GAME_RUNNING==true){
+                    window.requestAnimationFrame(render);
+                }
+                else{
+                    startGame();
+                }
+            }
+            function startGame(){
+            init();
+            render();
+            }
+            startGame();
+            //Signup for code
+            //bit.ly/2fB1tdk
+        
+        
+        </script>
+    
+    
+    </body>
+
+</html>

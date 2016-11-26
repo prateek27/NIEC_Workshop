@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>Game at NCU</title>
+    
+    </head>
+    <body>
+        
+        <script>
+            
+            var a = "Hello";
+            var b = 10;
+            
+            console.log(a+b);
+            
+            fun();
+            
+            function fun(){
+                console.log("Having Fun!");
+                
+            }
+            
+           
+            var fun2 = function(){
+                console.log("In Fun 2");
+                
+                a2=10;
+                
+                var arr = [];
+                brr = [1,2,3];
+
+                for(var i=4;i<6;i++){
+                    brr.push(i);
+                }
+                
+                for(var i=0;i<5;i++){
+                    console.log(brr[i]);
+                }
+                
+                //Avoid this
+                var carr = [];
+                carr[10] =5;
+                
+                
+                
+            }
+             fun2();
+            
+            if(a2==10){
+                console.log("Yes a2 is 10");
+            }
+            
+            var bird = {
+                x : 10,
+                y : 20,
+                color : "blue",
+                
+                jump : function(){
+                    console.log("Bird is Jumping");
+                },
+                
+                fly:function(){
+                    console.log("Bird is Flying");
+                }
+                
+                
+            };
+            
+            console.log(bird.x);
+            bird.fly();
+            
+            
+            
+            
+            
+        </script>
+    </body>
+</html>
